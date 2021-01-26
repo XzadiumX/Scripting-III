@@ -23,7 +23,7 @@ public class WeaponBehaviour : MonoBehaviour
     public float CDBurst;
     public GameObject InstancePoint;
     string GunName;
-
+    public bool HasTheGun;
     bool reloading;
     bool CanShoot;
     public float BulletForce;
@@ -34,6 +34,7 @@ public class WeaponBehaviour : MonoBehaviour
     float accuracy;
     float accuracyPerSecond;
 
+    public WeaponManager w_manager;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +54,18 @@ public class WeaponBehaviour : MonoBehaviour
 
     void Reload()
     {
+        if(Input.GetKeyDown(KeyCode.R) && !reloading)
+        {
+            w_manager.IsBusy = true;
+            reloading = true;
+            TimerReload = CDReload;
+        }
 
+        if(TimerReload <= 0)
+        {
+            reloading = false;
+            w_manager.IsBusy = false;
+        }
     }
 
     void Timer()
@@ -64,138 +76,20 @@ public class WeaponBehaviour : MonoBehaviour
     }
     void Shoot()
     {
-        switch(GunName)
+        if(!reloading)
         {
-            case "MachineGun":
-                if(Input.GetMouseButton(0) && TimerShootRate<=0)
-                {
-                    TimerShootRate = CDShootRate;
-
-                    //if(CurrentAmmo > 0 && TimerReload <= 0)
-                    //{
-
-                    //}
-
-                    accuracyModifier = (100 - currentAccuracy) / 1000;
-                    DirectionForward = InstancePoint.transform.forward;
-                    DirectionForward.x += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
-                    DirectionForward.y += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
-                    DirectionForward.z += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
-                    currentAccuracy -= accuracyDropPerShot;
-                    currentAccuracy = Mathf.Clamp(currentAccuracy, 0, 100);
-                    currentAccuracy = Mathf.Lerp(currentAccuracy, accuracy, accuracyPerSecond * Time.deltaTime);
-                    Ray Projectileray = new Ray(InstancePoint.transform.position, DirectionForward);
-                    if (Physics.Raycast(Projectileray, out RaycastHit hit, 10))
-                    {
-                        if (hit.rigidbody)
-                        {
-                            hit.rigidbody.AddForce(Projectileray.direction * BulletForce);
-                            Debug.Log(hit.rigidbody.gameObject.name);
-                            CurrentAmmo--;
-                        }
-
-                        else
-                        {
-                            Debug.Log("No ha impactado");
-                        }
-
-                    }
-
-
-
-
-                }
-                return;
-            case "Pistol":
-                if (Input.GetMouseButtonDown(0) )
-                {
-                    //    //if(TimerReload <= 0 && CurrentAmmo >= 0)
-                    //    //{
-
-                    //    //}
-                    accuracyModifier = (100 - currentAccuracy) / 1000;
-                    DirectionForward = InstancePoint.transform.forward;
-                    DirectionForward.x += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
-                    DirectionForward.y += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
-                    DirectionForward.z += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
-                    currentAccuracy -= accuracyDropPerShot;
-                    currentAccuracy = Mathf.Clamp(currentAccuracy, 0, 100);
-                    currentAccuracy = Mathf.Lerp(currentAccuracy, accuracy, accuracyPerSecond * Time.deltaTime);
-                    Ray Projectileray = new Ray(InstancePoint.transform.position, DirectionForward);
-                    if (Physics.Raycast(Projectileray, out RaycastHit hit, 10))
-                    {
-                        if (hit.rigidbody)
-                        {
-                            hit.rigidbody.AddForce(Projectileray.direction * BulletForce);
-                            Debug.Log(hit.rigidbody.gameObject.name);
-                            CurrentAmmo--;
-                        }
-
-                        else
-                        {
-                            Debug.Log("No ha impactado");
-                        }
-    
-                    }
-                   
-                }
-                return;
-            case "Ak47":
-                if (Input.GetMouseButton(0) && TimerShootRate<=0 && TimerBurst<=0)
-                {
-                    if(CurrentAmmountBurstBullets > 0)
-                    {
-                        TimerBurst = CDBurst;
-                        CurrentAmmountBurstBullets--;
-                    }
-                    else if(CurrentAmmountBurstBullets <= 0)
+            switch (GunName)
+            {
+                case "MachineGun":
+                    if (Input.GetMouseButton(0) && TimerShootRate <= 0)
                     {
                         TimerShootRate = CDShootRate;
-                        CurrentAmmountBurstBullets = MaxAmmountBurstBullets;
-                    }
-                    accuracyModifier = (100 - currentAccuracy) / 1000;
-                    DirectionForward = InstancePoint.transform.forward;
-                    DirectionForward.x += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
-                    DirectionForward.y += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
-                    DirectionForward.z += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
-                    currentAccuracy -= accuracyDropPerShot;
-                    currentAccuracy = Mathf.Clamp(currentAccuracy, 0, 100);
-                    currentAccuracy = Mathf.Lerp(currentAccuracy, accuracy, accuracyPerSecond * Time.deltaTime);
-                    Ray Projectileray = new Ray(InstancePoint.transform.position, DirectionForward);
-                    if (Physics.Raycast(Projectileray, out RaycastHit hit, 10))
-                    {
-                        if (hit.rigidbody)
-                        {
-                            hit.rigidbody.AddForce(Projectileray.direction * BulletForce);
-                            Debug.Log(hit.rigidbody.gameObject.name);
-                            CurrentAmmo--;
-                        }
 
-                        else
-                        {
-                            Debug.Log("No ha impactado");
-                        }
+                        //if(CurrentAmmo > 0 && TimerReload <= 0)
+                        //{
 
-                    }
-                    //if (TimerReload <= 0 && TimerShootRate <= 0 && CurrentAmmo >= 0)
-                    //{
+                        //}
 
-                    //}
-
-                    //else
-
-
-                }
-                return;
-            case "ShotGun":
-                if (Input.GetKeyDown(0))
-                {
-                    //if (TimerReload <= 0 && CurrentAmmo >= 0)
-                    //{
-
-                    //}
-                    for (int i = 0; i < MaxAmountShotGunBullets; i++)
-                    {
                         accuracyModifier = (100 - currentAccuracy) / 1000;
                         DirectionForward = InstancePoint.transform.forward;
                         DirectionForward.x += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
@@ -220,10 +114,133 @@ public class WeaponBehaviour : MonoBehaviour
                             }
 
                         }
-                    }
-                }
-                return;
 
+
+
+
+                    }
+                    return;
+                case "Pistol":
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        //    //if(TimerReload <= 0 && CurrentAmmo >= 0)
+                        //    //{
+
+                        //    //}
+                        accuracyModifier = (100 - currentAccuracy) / 1000;
+                        DirectionForward = InstancePoint.transform.forward;
+                        DirectionForward.x += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
+                        DirectionForward.y += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
+                        DirectionForward.z += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
+                        currentAccuracy -= accuracyDropPerShot;
+                        currentAccuracy = Mathf.Clamp(currentAccuracy, 0, 100);
+                        currentAccuracy = Mathf.Lerp(currentAccuracy, accuracy, accuracyPerSecond * Time.deltaTime);
+                        Ray Projectileray = new Ray(InstancePoint.transform.position, DirectionForward);
+                        if (Physics.Raycast(Projectileray, out RaycastHit hit, 10))
+                        {
+                            if (hit.rigidbody)
+                            {
+                                hit.rigidbody.AddForce(Projectileray.direction * BulletForce);
+                                Debug.Log(hit.rigidbody.gameObject.name);
+                                CurrentAmmo--;
+                            }
+
+                            else
+                            {
+                                Debug.Log("No ha impactado");
+                            }
+
+                        }
+
+                    }
+                    return;
+                case "Ak47":
+                    if (Input.GetMouseButton(0) && TimerShootRate <= 0 && TimerBurst <= 0)
+                    {
+                        if (CurrentAmmountBurstBullets > 0)
+                        {
+                            TimerBurst = CDBurst;
+                            CurrentAmmountBurstBullets--;
+                        }
+                        else if (CurrentAmmountBurstBullets <= 0)
+                        {
+                            TimerShootRate = CDShootRate;
+                            CurrentAmmountBurstBullets = MaxAmmountBurstBullets;
+                        }
+                        accuracyModifier = (100 - currentAccuracy) / 1000;
+                        DirectionForward = InstancePoint.transform.forward;
+                        DirectionForward.x += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
+                        DirectionForward.y += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
+                        DirectionForward.z += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
+                        currentAccuracy -= accuracyDropPerShot;
+                        currentAccuracy = Mathf.Clamp(currentAccuracy, 0, 100);
+                        currentAccuracy = Mathf.Lerp(currentAccuracy, accuracy, accuracyPerSecond * Time.deltaTime);
+                        Ray Projectileray = new Ray(InstancePoint.transform.position, DirectionForward);
+                        if (Physics.Raycast(Projectileray, out RaycastHit hit, 10))
+                        {
+                            if (hit.rigidbody)
+                            {
+                                hit.rigidbody.AddForce(Projectileray.direction * BulletForce);
+                                Debug.Log(hit.rigidbody.gameObject.name);
+                                CurrentAmmo--;
+                            }
+
+                            else
+                            {
+                                Debug.Log("No ha impactado");
+                            }
+
+                        }
+                        //if (TimerReload <= 0 && TimerShootRate <= 0 && CurrentAmmo >= 0)
+                        //{
+
+                        //}
+
+                        //else
+
+
+                    }
+                    return;
+                case "ShotGun":
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        //if (TimerReload <= 0 && CurrentAmmo >= 0)
+                        //{
+
+                        //}
+                        Debug.Log("PAM");
+                        for (int i = 0; i < MaxAmountShotGunBullets; i++)
+                        {
+                            Debug.Log("PUM");
+                            accuracyModifier = (100 - currentAccuracy) / 1000;
+                            DirectionForward = InstancePoint.transform.forward;
+                            DirectionForward.x += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
+                            DirectionForward.y += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
+                            DirectionForward.z += UnityEngine.Random.Range(-accuracyModifier, accuracyModifier);
+                            currentAccuracy -= accuracyDropPerShot;
+                            currentAccuracy = Mathf.Clamp(currentAccuracy, 0, 100);
+                            currentAccuracy = Mathf.Lerp(currentAccuracy, accuracy, accuracyPerSecond * Time.deltaTime);
+                            Ray Projectileray = new Ray(InstancePoint.transform.position, DirectionForward);
+                            if (Physics.Raycast(Projectileray, out RaycastHit hit, 10))
+                            {
+                                if (hit.rigidbody)
+                                {
+                                    hit.rigidbody.AddForce(Projectileray.direction * BulletForce);
+                                    Debug.Log(hit.rigidbody.gameObject.name);
+                                    CurrentAmmo--;
+                                }
+
+                                else
+                                {
+                                    Debug.Log("No ha impactado");
+                                }
+
+                            }
+                        }
+                    }
+                    return;
+
+            }
         }
     }
 }

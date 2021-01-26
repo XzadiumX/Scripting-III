@@ -6,23 +6,36 @@ public class WeaponManager : MonoBehaviour
 {
 
     public GameObject[] weapons;
+    WeaponBehaviour[] w_behave;
     int WeaponByNumber;
+    public bool IsBusy;
     void Start()
     {
-        
+        foreach (var a in weapons)
+        {
+            a.SetActive(false);
+            if(a != null)
+            {
+                
+            }
+        }
+        weapons[WeaponByNumber].SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        ChangeWeapon();
+        if(!IsBusy)
+        {
+            ChangeWeapon();
+        }
     }
 
     void ChangeWeapon()
     {
         if(Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if (WeaponByNumber <= weapons.Length - 1)
+            if (WeaponByNumber < weapons.Length -1)
             {
                 WeaponByNumber++;
             }
@@ -31,7 +44,8 @@ public class WeaponManager : MonoBehaviour
                 a.SetActive(false);
             }
             Debug.Log(WeaponByNumber);
-            weapons[WeaponByNumber -1].SetActive(true);
+            
+            weapons[WeaponByNumber].SetActive(true);
         }
 
         else if(Input.GetAxis("Mouse ScrollWheel") < 0)
@@ -45,7 +59,7 @@ public class WeaponManager : MonoBehaviour
             {
                 a.SetActive(false);
             }
-            weapons[WeaponByNumber -1].SetActive(true);
+            weapons[WeaponByNumber].SetActive(true);
         }
     }
 }

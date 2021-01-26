@@ -24,11 +24,12 @@ public class FirstPersonController  : MonoBehaviour
     Vector3 velDeslizarGlobal;
     float velocidadY;
     float velocidadAngular;
-
     float anguloCamara = 0;
 
     CharacterController cmpCC;
     Camera cmpCamera;
+    public Interaction_UI player_UI;
+
 
     bool saltando = false;
     bool agachado = false;
@@ -52,7 +53,30 @@ public class FirstPersonController  : MonoBehaviour
         Mover();
         ComprobarSuelo();
         Saltar();
+        Interact();
+    }
 
+    private void Interact()
+    {
+        player_UI.CanvasUI.SetActive(false);
+        //player_UI.IsActive = false;
+        Ray ray;
+        RaycastHit hit;
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out hit, 5))
+        {
+            if(hit.collider.gameObject.tag == "Item")
+            {
+                player_UI.CanvasUI.SetActive(true);
+                //player_UI.IsActive = true;
+                hit.collider.gameObject.GetComponent<Item_Behavior>().Observe();
+                Debug.Log("Veo");
+                if(Input.GetKeyDown(KeyCode.E))
+                {
+                    hit.collider.gameObject.GetComponent<Item_Behavior>().Take();
+                }
+            }
+        }
     }
 
     private void Saltar()

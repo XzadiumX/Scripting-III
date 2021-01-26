@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/LoadingScreen.unity
+    guid: 1b49698023550564a943a3d14095fde6
+  - enabled: 1
+    path: Assets/Scenes/LanguageMenu.unity
+    guid: cafb1c9741c0fad488f09c3978fa8a7a
+  - enabled: 1
+    path: Assets/Scenes/Yago.unity
+    guid: 3e2943071d48877439fb15e1246ce11b
   m_configObjects: {}
