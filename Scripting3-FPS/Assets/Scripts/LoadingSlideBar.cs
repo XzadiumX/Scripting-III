@@ -13,6 +13,7 @@ public class LoadingSlideBar : MonoBehaviour
     public TextMeshProUGUI LoadingText;
     int Counter;
     bool CountUp;
+    bool Ended;
     void Start()
     {
         LoadingBar.value = 0;
@@ -26,9 +27,10 @@ public class LoadingSlideBar : MonoBehaviour
             Counter = (int)LoadingBar.value * 20;
             LoadingText.text = Counter.ToString() + " %";
         }
-        if(Counter == (int)100)
+        if(Counter == (int)100 && !Ended)
         {
             SceneManager.LoadSceneAsync("Yago");
+            Ended = true;
         }
     }
 }

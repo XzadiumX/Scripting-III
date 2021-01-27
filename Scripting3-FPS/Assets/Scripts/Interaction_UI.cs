@@ -19,6 +19,7 @@ public class Interaction_UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("aaaaahhhh");
         Language_reference = FindObjectOfType<PersistentLanguage>();
         Language = Language_reference.LanguageToString;
         IsActive = false;
@@ -184,47 +185,48 @@ public class Interaction_UI : MonoBehaviour
                     switch (ItemName)
                     {
                         case "Pistol":
-                            WeaponDescription.text = "Hola";
-                            InteractTextInfo.text = "Hola";
+                            WeaponDescription.text = "Pistola, de calibre preciso";
+                            InteractTextInfo.text = "Pulsa E para interactuar con el objeto";
                             return;
 
                         case "Machinegun":
-                            WeaponDescription.text = "Hola";
-                            InteractTextInfo.text = "Hola";
+                            WeaponDescription.text = "Ametralladora, para varios objetivos";
+                            InteractTextInfo.text = "Pulsa E para interactuar con el objeto";
 
                             return;
 
                         case "Ak47":
-                            WeaponDescription.text = "Hola";
-                            InteractTextInfo.text = "Hola";
+                            WeaponDescription.text = "Ak47, para eliminar enemigos rapidamente";
+                            InteractTextInfo.text = "Pulsa E para interactuar con el objeto";
                             return;
 
                         case "ShotGun":
-                            WeaponDescription.text = "Hola";
-                            InteractTextInfo.text = "Hola";
+                            WeaponDescription.text = "Escopeta, perfecta para grupos";
+                            InteractTextInfo.text = "Pulsa E para interactuar con el objeto";
                             return;
 
                         case "PistolAmmo":
-                            WeaponDescription.text = "Hola";
-                            InteractTextInfo.text = "Hola";
+
+                            WeaponDescription.text = "Municion Pistola, de calibre preciso¨Conseguiras 20 de municion¨";
+                            InteractTextInfo.text = "Pulsa E para interactuar con el objeto";
                             return;
 
                         case "MachinegunAmmo":
-                            WeaponDescription.text = "Hola";
-                            InteractTextInfo.text = "Hola";
+                            WeaponDescription.text = "Municion de Ametralladora, para varios objetivos ¨Conseguiras 20 de municion¨";
+                            InteractTextInfo.text = "Pulsa E para interactuar con el objeto";
                             return;
 
                         case "Ak47Ammo":
-                            WeaponDescription.text = "Hola";
-                            InteractTextInfo.text = "Hola";
+                            WeaponDescription.text = "Municion Ak47, para eliminar enemigos rapidamente ¨Conseguiras 16 de municion¨";
+                            InteractTextInfo.text = "Pulsa E para interactuar con el objeto";
                             return;
                         case "ShotGunAmmo":
-                            WeaponDescription.text = "Hola";
-                            InteractTextInfo.text = "Hola";
+                            WeaponDescription.text = "Municion Escopeta, perfecta para grupos ¨¨Conseguiras 5 de municion¨";
+                            InteractTextInfo.text = "Pulsa E para interactuar con el objeto";
                             return;
                         case "Health":
-                            WeaponDescription.text = "Adios";
-                            InteractTextInfo.text = "Hola";
+                            WeaponDescription.text = "Jeringuilla, elemento curativo que alivia el dolor, ¨Conseguiras 20 de vida¨";
+                            InteractTextInfo.text = "Pulsa E para interactuar con el objeto";
                             return;
                     }
                     return;
