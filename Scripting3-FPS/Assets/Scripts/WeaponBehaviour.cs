@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class WeaponBehaviour : MonoBehaviour
 {
+
     public enum ShootStyle { MachineGun, Pistol, Ak47, ShotGun }
     public ShootStyle ShootRate;
 
@@ -43,6 +45,7 @@ public class WeaponBehaviour : MonoBehaviour
     public TextMeshProUGUI CurrentMagazine_text;
     public Sprite weapon_image;
     public ParticleSystem Gun_Particle;
+    public Image Image_Canvas;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +64,7 @@ public class WeaponBehaviour : MonoBehaviour
         CurrentMagazine_text.text = CurrentMagazine.ToString();
 
         Debug.DrawLine(InstancePoint.transform.position, DirectionForward);
+        Image_Canvas.sprite = weapon_image;
     }
 
     void Reload()

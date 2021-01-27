@@ -63,6 +63,6 @@ public class AtaqueEnemigo : MonoBehaviour
     void AnimEventDañarAlJugador(int daño)
     {
         vidaJugador.QuitarVida(daño);
-        //vidaJugador.vidaActual -= daño;
+        
     }
 }
