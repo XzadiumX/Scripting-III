@@ -23,11 +23,12 @@ public class ControlEnemigo : MonoBehaviour {
     EstadoEnemigo estado;
 
     NavMeshAgent cmpAgent;
-    Transform jugador;
+    public Transform jugador;
     
     
     private void Awake()
     {
+        
         cmpAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -42,21 +43,22 @@ public class ControlEnemigo : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(estado == EstadoEnemigo.Patrullando)
-        {
-            ComprobarDistanciaAJugador();
-            ComprobarDestinoAlcanzado();
-        }
-        else if(estado == EstadoEnemigo.PersiguiendoAlJugador)
-        {
-            PerseguirAlJugador();
-            ComprobarDistanciaAPuntoSpawn();
-        }
-        else if(estado == EstadoEnemigo.VolviendoAlOrigen)
-        {
-            ComprobarDestinoAlcanzado();
-        }
-	}
+             if(estado == EstadoEnemigo.Patrullando)
+             {
+                 ComprobarDistanciaAJugador();
+                 ComprobarDestinoAlcanzado();
+             }
+             else if(estado == EstadoEnemigo.PersiguiendoAlJugador)
+             {
+                 PerseguirAlJugador();
+                 ComprobarDistanciaAPuntoSpawn();
+             }
+             else if(estado == EstadoEnemigo.VolviendoAlOrigen)
+             {
+                 ComprobarDestinoAlcanzado();
+             } 
+
+    }
 
     void IrAPosicionAleatoria()
     {
@@ -76,7 +78,8 @@ public class ControlEnemigo : MonoBehaviour {
     }
 
     void PerseguirAlJugador()
-    {        
+    {
+        Debug.Log("Persiguiendo");
         estado = EstadoEnemigo.PersiguiendoAlJugador;
 
         cmpAgent.stoppingDistance = distanciaParada;
@@ -94,9 +97,11 @@ public class ControlEnemigo : MonoBehaviour {
 
     void ComprobarDistanciaAJugador()
     {
+        Debug.Log("ComprobandoDis1");
         float distanciaAlJugador = Vector3.Distance(this.transform.position, jugador.transform.position);
         if(distanciaAlJugador < radioAlerta)
         {
+            Debug.Log("ComprobandoDis2");
             PerseguirAlJugador();
         }
     }
