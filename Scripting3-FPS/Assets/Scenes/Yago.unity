@@ -40767,21 +40767,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShootRate: 3
-  MaxMagazine: 20
-  CurrentMagazine: 5
-  MaxAmmo: 8
-  CurrentAmmo: 4
-  DamageBullet: 10
+  MaxMagazine: 50
+  CurrentMagazine: 20
+  MaxAmmo: 50
+  CurrentAmmo: 20
+  DamageBullet: 4
   TimerShootRate: 0
   CDShootRate: 0
   TimerReload: 0
   CDReload: 3
   MaxAmmountBurstBullets: 3
   CurrentAmmountBurstBullets: 5
-  MaxAmountShotGunBullets: 8
+  MaxAmountShotGunBullets: 4
   TimerBurst: 0
   CDBurst: 0.4
-  BulletsGetItFromReload: 0
+  BulletsGetItFromReload: 8
   InstancePoint: {fileID: 1067459631}
   HasTheGun: 0
   CantReload: 0
@@ -51433,7 +51433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1675152523
 Transform:
   m_ObjectHideFlags: 0
