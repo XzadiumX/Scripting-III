@@ -8,7 +8,6 @@ public class VidaBase : MonoBehaviour
     protected int vidaActual;
 
     public int VidaMaxima => vidaMaxima;
-
     public int VidaActual
     {
         get { return vidaActual; }
@@ -27,6 +26,7 @@ public class VidaBase : MonoBehaviour
     public void QuitarVida(int daño)
     {
         vidaActual -= daño;
+
         if(vidaActual > vidaMaxima)
         {
             vidaActual = vidaMaxima;

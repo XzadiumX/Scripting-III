@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VidaEnemigo : VidaBase
 {
+   
 
     protected override void Morir()
     {

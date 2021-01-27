@@ -42,6 +42,7 @@ public class WeaponBehaviour : MonoBehaviour
     public TextMeshProUGUI CurrentAmmo_text;
     public TextMeshProUGUI CurrentMagazine_text;
     public Sprite weapon_image;
+    public ParticleSystem Gun_Particle;
 
     // Start is called before the first frame update
     void Start()
@@ -141,6 +142,8 @@ public class WeaponBehaviour : MonoBehaviour
                             {
                                 Debug.Log("No ha impactado");
                             }
+                            Gun_Particle.transform.position = InstancePoint.transform.position;
+                            Gun_Particle.Play();
                             CurrentAmmo--;
                         }
 
@@ -183,6 +186,8 @@ public class WeaponBehaviour : MonoBehaviour
                             {
                                 Debug.Log("No ha impactado");
                             }
+                            Gun_Particle.transform.position = InstancePoint.transform.position;
+                            Gun_Particle.Play();
                             CurrentAmmo--;
                         }
 
@@ -228,6 +233,8 @@ public class WeaponBehaviour : MonoBehaviour
                             {
                                 Debug.Log("No ha impactado");
                             }
+                            Gun_Particle.transform.position = InstancePoint.transform.position;
+                            Gun_Particle.Play();
                             CurrentAmmo--;
                         }
                         //if (TimerReload <= 0 && TimerShootRate <= 0 && CurrentAmmo >= 0)
@@ -278,6 +285,8 @@ public class WeaponBehaviour : MonoBehaviour
                                 {
                                     Debug.Log("No ha impactado");
                                 }
+                                Gun_Particle.transform.position = InstancePoint.transform.position;
+                                Gun_Particle.Play();
                                 CurrentAmmo--;
                             }
                         }
