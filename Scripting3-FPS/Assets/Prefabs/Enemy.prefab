@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 8663549064725718522}
   - component: {fileID: -1987204827503593713}
   - component: {fileID: 1732268053531331955}
+  - component: {fileID: 236523677993900921}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -322,6 +323,23 @@ MonoBehaviour:
   rangoAtaque: 2
   tiempoEntreAtaques: 3
   probabilidadAtaqueFuerte: 0.2
+--- !u!114 &236523677993900921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817634796624669307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3df355a7c3913b648b0787e119d5200f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radioAlerta: 5
+  radioMovAleatorio: 5
+  distanciaVueltaAlSpawn: 15
+  distanciaParada: 1
+  jugador: {fileID: 0}
 --- !u!1 &2055218821153686628
 GameObject:
   m_ObjectHideFlags: 0
