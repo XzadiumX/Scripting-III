@@ -27,6 +27,10 @@ public class VidaBase : MonoBehaviour
     public void QuitarVida(int daño)
     {
         vidaActual -= daño;
+        if(vidaActual > vidaMaxima)
+        {
+            vidaActual = vidaMaxima;
+        }
         if (vidaActual <= 0)
         {
             Morir();

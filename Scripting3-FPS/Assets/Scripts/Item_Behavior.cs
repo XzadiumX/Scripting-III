@@ -14,6 +14,7 @@ public class Item_Behavior : MonoBehaviour
     public int Value;
     public Interaction_UI player_UI;
     public WeaponBehaviour weapon_behave;
+    public VidaJugador player_Vida;
     // Start is called before the first frame update
     void Start()
     {
@@ -79,29 +80,34 @@ public class Item_Behavior : MonoBehaviour
             case "MachinegunAmmo":
                 weapon_behave.CurrentMagazine += Value;
                 weapon_behave.CurrentMagazine = Mathf.Clamp(weapon_behave.CurrentMagazine, 0, weapon_behave.MaxMagazine);
+                weapon_behave.CantReload = false;
                 Destroy(this.gameObject);
                 return;
 
             case "PistolAmmo":
                 weapon_behave.CurrentMagazine += Value;
                 weapon_behave.CurrentMagazine = Mathf.Clamp(weapon_behave.CurrentMagazine, 0, weapon_behave.MaxMagazine);
+                weapon_behave.CantReload = false;
                 Destroy(this.gameObject);
                 return;
 
             case "Ak47Ammo":
                 weapon_behave.CurrentMagazine += Value;
                 weapon_behave.CurrentMagazine = Mathf.Clamp(weapon_behave.CurrentMagazine, 0, weapon_behave.MaxMagazine);
+                weapon_behave.CantReload = false;
                 Destroy(this.gameObject);
                 return;
 
             case "ShotGunAmmo":
                 weapon_behave.CurrentMagazine += Value;
                 weapon_behave.CurrentMagazine = Mathf.Clamp(weapon_behave.CurrentMagazine, 0, weapon_behave.MaxMagazine);
+                weapon_behave.CantReload = false;
                 Destroy(this.gameObject);
                 return;
 
             case "Health":
-
+                player_Vida.QuitarVida(-Value);
+                Destroy(this.gameObject);
                 return;
 
         }

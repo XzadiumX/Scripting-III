@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WeaponBehaviour : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class WeaponBehaviour : MonoBehaviour
     public int CurrentMagazine;
     public int MaxAmmo;
     public int CurrentAmmo;
+    public int DamageBullet;
     public float TimerShootRate;
     public float CDShootRate;
     public float TimerReload;
@@ -21,11 +23,13 @@ public class WeaponBehaviour : MonoBehaviour
     public float MaxAmountShotGunBullets;
     public float TimerBurst;
     public float CDBurst;
+    public int BulletsGetItFromReload;
     public GameObject InstancePoint;
     string GunName;
     public bool HasTheGun;
     bool reloading;
     bool CanShoot;
+    public bool CantReload;
     public float BulletForce;
     Vector3 DirectionForward;
     float accuracyModifier;
@@ -35,6 +39,9 @@ public class WeaponBehaviour : MonoBehaviour
     float accuracyPerSecond;
 
     public WeaponManager w_manager;
+    public TextMeshProUGUI CurrentAmmo_text;
+    public TextMeshProUGUI CurrentMagazine_text;
+    public Sprite weapon_image;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,21 +55,38 @@ public class WeaponBehaviour : MonoBehaviour
         Shoot();
         Reload();
         Timer();
+        CurrentAmmo_text.text = CurrentAmmo.ToString();
+        CurrentMagazine_text.text = CurrentMagazine.ToString();
 
         Debug.DrawLine(InstancePoint.transform.position, DirectionForward);
     }
 
     void Reload()
     {
-        if(Input.GetKeyDown(KeyCode.R) && !reloading)
+        if(Input.GetKeyDown(KeyCode.R) && !reloading && !CantReload)
         {
             w_manager.IsBusy = true;
             reloading = true;
             TimerReload = CDReload;
         }
 
-        if(TimerReload <= 0)
+        if(TimerReload <= 0 && reloading)
         {
+            if(CurrentMagazine >= BulletsGetItFromReload)
+            {
+                CurrentAmmo += Mathf.Clamp(BulletsGetItFromReload, 0, MaxAmmo);
+                CurrentMagazine -= Mathf.Clamp(BulletsGetItFromReload, 0, MaxAmmo);
+                if(CurrentMagazine == 0)
+                {
+                    CantReload = true;
+                }
+            }
+            else if(CurrentMagazine < BulletsGetItFromReload)
+            {
+                CurrentAmmo += CurrentMagazine;
+                CurrentMagazine = 0;
+                CantReload = true;
+            }
             reloading = false;
             w_manager.IsBusy = false;
         }
@@ -81,7 +105,7 @@ public class WeaponBehaviour : MonoBehaviour
             switch (GunName)
             {
                 case "MachineGun":
-                    if (Input.GetMouseButton(0) && TimerShootRate <= 0)
+                    if (Input.GetMouseButton(0) && TimerShootRate <= 0 && CurrentAmmo > 0)
                     {
                         TimerShootRate = CDShootRate;
 
@@ -104,15 +128,19 @@ public class WeaponBehaviour : MonoBehaviour
                             if (hit.rigidbody)
                             {
                                 hit.rigidbody.AddForce(Projectileray.direction * BulletForce);
+
                                 Debug.Log(hit.rigidbody.gameObject.name);
-                                CurrentAmmo--;
                             }
 
+                            else if (hit.collider.tag == "Enemy")
+                            {
+                                hit.collider.gameObject.GetComponent<VidaEnemigo>().QuitarVida(DamageBullet);
+                            }
                             else
                             {
                                 Debug.Log("No ha impactado");
                             }
-
+                            CurrentAmmo--;
                         }
 
 
@@ -121,7 +149,7 @@ public class WeaponBehaviour : MonoBehaviour
                     }
                     return;
                 case "Pistol":
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0) && !reloading && CurrentAmmo > 0)
                     {
                         //    //if(TimerReload <= 0 && CurrentAmmo >= 0)
                         //    //{
@@ -142,20 +170,25 @@ public class WeaponBehaviour : MonoBehaviour
                             {
                                 hit.rigidbody.AddForce(Projectileray.direction * BulletForce);
                                 Debug.Log(hit.rigidbody.gameObject.name);
-                                CurrentAmmo--;
+                            }
+
+                            else if (hit.collider.gameObject.tag == "Enemy")
+                            {
+                                Debug.Log("Hola");
+                                hit.collider.gameObject.GetComponent<VidaEnemigo>().QuitarVida(DamageBullet);
                             }
 
                             else
                             {
                                 Debug.Log("No ha impactado");
                             }
-
+                            CurrentAmmo--;
                         }
 
                     }
                     return;
                 case "Ak47":
-                    if (Input.GetMouseButton(0) && TimerShootRate <= 0 && TimerBurst <= 0)
+                    if (Input.GetMouseButton(0) && TimerShootRate <= 0 && TimerBurst <= 0 && !reloading && CurrentAmmo > 0)
                     {
                         if (CurrentAmmountBurstBullets > 0)
                         {
@@ -182,14 +215,19 @@ public class WeaponBehaviour : MonoBehaviour
                             {
                                 hit.rigidbody.AddForce(Projectileray.direction * BulletForce);
                                 Debug.Log(hit.rigidbody.gameObject.name);
-                                CurrentAmmo--;
+                            }
+
+                            else if (hit.collider.gameObject.tag == "Enemy")
+                            {
+                                Debug.Log("Hola");
+                                hit.collider.gameObject.GetComponent<VidaEnemigo>().QuitarVida(DamageBullet);
                             }
 
                             else
                             {
                                 Debug.Log("No ha impactado");
                             }
-
+                            CurrentAmmo--;
                         }
                         //if (TimerReload <= 0 && TimerShootRate <= 0 && CurrentAmmo >= 0)
                         //{
@@ -202,7 +240,7 @@ public class WeaponBehaviour : MonoBehaviour
                     }
                     return;
                 case "ShotGun":
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0) && !reloading && CurrentAmmo > 0)
                     {
                         //if (TimerReload <= 0 && CurrentAmmo >= 0)
                         //{
@@ -227,14 +265,19 @@ public class WeaponBehaviour : MonoBehaviour
                                 {
                                     hit.rigidbody.AddForce(Projectileray.direction * BulletForce);
                                     Debug.Log(hit.rigidbody.gameObject.name);
-                                    CurrentAmmo--;
+                                }
+
+                                else if (hit.collider.gameObject.tag == "Enemy")
+                                {
+                                    Debug.Log("Hola");
+                                    hit.collider.gameObject.GetComponent<VidaEnemigo>().QuitarVida(DamageBullet);
                                 }
 
                                 else
                                 {
                                     Debug.Log("No ha impactado");
                                 }
-
+                                CurrentAmmo--;
                             }
                         }
                     }

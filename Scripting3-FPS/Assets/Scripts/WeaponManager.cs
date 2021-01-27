@@ -14,10 +14,6 @@ public class WeaponManager : MonoBehaviour
         foreach (var a in weapons)
         {
             a.SetActive(false);
-            if(a != null)
-            {
-                
-            }
         }
         weapons[WeaponByNumber].SetActive(true);
     }
