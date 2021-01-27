@@ -20,18 +20,18 @@ public class ButtonLanguage : MonoBehaviour
     public void Español()
     {
         language.LanguageToString = "Spanish";
-        SceneManager.LoadScene("LoadingScreen");
+        SceneManager.LoadScene(AppScenes.LOADING_SCENE);
     }
 
     public void Inglés()
     {
         language.LanguageToString = "English";
-        SceneManager.LoadScene("LoadingScreen");
+        SceneManager.LoadScene(AppScenes.LOADING_SCENE);
     }
 
     public void Frances()
     {
         language.LanguageToString = "French";
-        SceneManager.LoadScene("LoadingScreen");
+        SceneManager.LoadScene(AppScenes.LOADING_SCENE);
     }
 }
