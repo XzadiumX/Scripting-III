@@ -67,6 +67,7 @@ public class FirstPersonController  : MonoBehaviour
         {
             if(hit.collider.gameObject.tag == "Item")
             {
+                
                 player_UI.CanvasUI.SetActive(true);
                 //player_UI.IsActive = true;
                 hit.collider.gameObject.GetComponent<Item_Behavior>().Observe();
