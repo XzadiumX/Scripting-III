@@ -42,6 +42,7 @@ public class WeaponBehaviour : MonoBehaviour
     public TextMeshProUGUI CurrentAmmo_text;
     public TextMeshProUGUI CurrentMagazine_text;
     public Sprite weapon_image;
+
     // Start is called before the first frame update
     void Start()
     {
