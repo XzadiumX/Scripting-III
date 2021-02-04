@@ -35,16 +35,27 @@ public class FirstPersonController  : MonoBehaviour
     bool agachado = false;
     bool deslizando = false;
 
+    public GameObject granadaTocha;
+    public GameObject granadaDebil;
+    float CD;
+    public GrenadeInfo g_data;
+    float nextGrenade= 0;
+
     private void Awake()
     {
         cmpCC = GetComponent<CharacterController>();
         cmpCamera = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
     }
+    void Start()
+    {
+        CD = g_data.CD;
+    }
 
 
     void Update()
     {
+        
         AplicarGravedad();
         Rotar();
         RotarCamara();
@@ -54,6 +65,20 @@ public class FirstPersonController  : MonoBehaviour
         ComprobarSuelo();
         Saltar();
         Interact();
+        nextGrenade -= Time.deltaTime;
+        if (nextGrenade<=0)
+        {
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                LanzarGranada();
+                nextGrenade = CD;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            LanzarGranadaDebil();
+            nextGrenade = CD;
+        }
     }
 
     private void Interact()
@@ -205,6 +230,16 @@ public class FirstPersonController  : MonoBehaviour
         else { velDeslizarGlobal = Vector3.zero; }
     }
 
+    void LanzarGranada()
+    {
+        GameObject grenade = Instantiate(granadaTocha, transform.position, transform.rotation);
+        
+    }
+
+    void LanzarGranadaDebil()
+    {
+        GameObject grenade = Instantiate(granadaDebil, transform.position, transform.rotation);
+    }
 
 
 }

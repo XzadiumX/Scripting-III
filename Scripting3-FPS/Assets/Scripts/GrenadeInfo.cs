@@ -17,9 +17,9 @@ public class GrenadeInfo : ScriptableObject
     }
 
     [SerializeField]
-    private float g_damage;
+    private int g_damage;
 
-    public float damage
+    public int damage
     {
         get
         {

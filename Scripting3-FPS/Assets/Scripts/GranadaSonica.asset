@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c3764e082460b44d9ea48b3308704c3, type: 3}
-  m_Name: ExplosiveGrenade
+  m_Name: GranadaSonica
   m_EditorClassIdentifier: 
-  g_name: ExplosiveGrenade
-  g_damage: 50
-  g_ForceThrow: 20
-  g_explosionForce: 2000
+  g_name: GranadaSonica
+  g_damage: 20
+  g_ForceThrow: 10
+  g_explosionForce: 500
   g_capacity: 0
   TimerBetweenGrenades: 2
-  CDBetweenGrenades: 5
+  CDBetweenGrenades: 0
